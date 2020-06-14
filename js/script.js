@@ -22,7 +22,7 @@ function createMatrix(){
 
       for (let i = 1; i < table.rows.length; i++) {
             
-            table.rows[i].
+            //table.rows[i]
             
             
             
