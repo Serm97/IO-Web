@@ -13,6 +13,24 @@ function deleteRow() {
             table.deleteRow(rowCount - 1);
 }
 
+function createMatrix(){
+      var table = document.getElementById("tabledata");
+      var obj = {
+            "Matriz": [],
+            "Alfa": ""
+      }
+
+      for (let i = 1; i < table.rows.length; i++) {
+            
+            table.rows[i].
+            
+            
+            
+      }
+
+      obj.Matriz.push
+}
+
 function maximax(){
       $.ajax({
             method: "POST",
