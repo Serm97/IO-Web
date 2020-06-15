@@ -1,45 +1,51 @@
-function addRow() {
-      document.getElementById("tabledata").insertRow(-1).innerHTML = '<tr><th scope="row">  <input class="form-control form-control-sm" type="text" value="Alt"> </th><td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td><td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td></tr>';
-}
-
-function deleteRow() {
-      var table = document.getElementById("tabledata");
-      var rowCount = table.rows.length;
-      //console.log(rowCount);
-
-      if (rowCount <= 1)
-            alert('No se puede eliminar el encabezado');
-      else
-            table.deleteRow(rowCount - 1);
-}
-
-function createMatrix(){
-      var table = document.getElementById("tabledata");
-      var obj = {
-            "Matriz": [],
-            "Alfa": ""
+(function (yourCode) {
+      yourCode(window.jQuery, window, document)
+}(function ($, window) {
+      let matriz = {}
+      let matrizAux = []
+      $(function () {
+            $("#aumentar-fila").on('click', addRow)
+            $("#eliminar-fila").on('click', deleteRow)
+            $("#maximin").on('click', maximin)
+      })
+      function addRow() {
+            let filas = '<tr><th scope="row">  <input class="form-control form-control-sm" type="text" value="Alt"> </th><td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td><td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td></tr>'
+            $("#tabledata").append(filas)
       }
 
-      for (let i = 1; i < table.rows.length; i++) {
-            
-            //table.rows[i]
-            
-            
-            
+      function deleteRow() {
+            var table = document.getElementById("tabledata");
+            var rowCount = table.rows.length;
+            //console.log(rowCount);
+
+            if (rowCount <= 1)
+                  alert('No se puede eliminar el encabezado');
+            else
+                  table.deleteRow(rowCount - 1);
       }
 
-      obj.Matriz.push
-}
+      function armarMatriz() {
+            $("tbody tr").each(function () {
+                  let matrizVal = []
+                  $(this).find('td').each(function () {
+                        matrizVal.push($(this).find('input').val())
+                  })
+                  matrizAux.push(matrizVal);
+            })
+            matriz.matriz = matrizAux
+      }
 
-function maximax(){
-      $.ajax({
-            method: "POST",
-            url: "http:/"
-          }).done(function(data) {
-            alert(data); // imprimimos la respuesta
-          }).fail(function() {
-            alert("Algo salió mal");
-          }).always(function() {
-            alert("Siempre se ejecuta")
-          });
-}
+      function maximin() {
+            armarMatriz()
+            $.ajax({
+                  type: "POST", 
+                  crossDomain: true,
+                  dataType: 'json',
+                  url: "https://invoperacionesapi.azurewebsites.net/api/Metodos/GetWaldCriterion",
+                  data: matriz, 
+                  success: function (datos) {
+                        console.log(datos)
+                  },
+            })
+      }
+}))

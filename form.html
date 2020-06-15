@@ -10,6 +10,7 @@
   <meta name="author" content="">
 
   <title>INV-OP</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="icon" type="image/svg+xml"
     href="https://pbs.twimg.com/profile_images/488819340012027904/miTSg-oB_400x400.png" sizes="any">
   <!-- Custom fonts for this template-->
@@ -171,173 +172,176 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <div class="pt-3">
-            <h1 class="m-0 font-weight-bold text-gray-900 text-center card p-3">
-              Toma de Decisiones
-            </h1>
+          <h1 class="m-0 font-weight-bold text-gray-900 text-center card p-3">
+            Toma de Decisiones
+          </h1>
 
-            <!-- Content Row -->
-            <div class="row">
-
-              <div class="col-lg-8 p-2">
-
-                <!-- Illustrations -->
-                <div class="card shadow mb-4 px-3">
-                  <div class="card-body mt-3">
-                    <p>Ingrese los datos de la matriz a evaluar y a continuación seleccione el metodo con el que desea
-                      que se realice el calculo:</p>
-                    <table class="table table-striped" id="tabledata">
-                      <thead>
-                        <tr>
-                          <th scope="col">Alternativa</th>
-                          <th scope="col">Evento A</th>
-                          <th scope="col">Evento B</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">  <input class="form-control form-control-sm" type="text" value="a"> </th>
-                          <td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td>
-                          <td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">  <input class="form-control form-control-sm" type="text" value="b"> </th>
-                          <td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td>
-                          <td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <a href="#" onclick="addRow()">Agregar Alternativa <i class="fa fa-plus"></i></a>
-                    <a class="float-right text-danger" href="#" onclick="deleteRow()">Quitar Alternativa <i class="fa fa-minus"></i></a>
+          <!-- Content Row -->
+          <div>
+            <div class="card shadow">
+              <form id="form-calculos">
+                <div class="card-body mt-3">
+                  <p>Ingrese los datos de la matriz a evaluar y a continuación seleccione el metodo con el que desea
+                    que se realice el calculo:</p>
+                  <table class="table table-striped" id="tabledata">
+                    <thead>
+                      <tr>
+                        <th scope="col">Alternativa</th>
+                        <th scope="col">Evento A</th>
+                        <th scope="col">Evento B</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"> <input class="form-control form-control-sm" name="valor" type="text" value="a"> </th>
+                        <td> <input class="form-control form-control-sm" type="text" name="valor" placeholder="Ingrese el valor" required>
+                        </td>
+                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row"> <input class="form-control form-control-sm" type="text" value="b"> </th>
+                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        </td>
+                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <a href="#" id="aumentar-fila">Agregar Alternativa <i class="fa fa-plus"></i></a>
+                  <a id="eliminar-fila" class="float-right text-danger" href="#">Quitar Alternativa <i
+                      class="fa fa-minus"></i></a>
+                </div>
+                <div class="row" style="text-align: center;">
+                  <div class="card border-left-primary shadow p-2 col">
+                    <h5 class="text-sm text-gray-800">Métodos No Probabilísticos</h5>
+                    <div class="my-1 text-center">
+                      <button id="maximin" type="button" class="btn btn-outline-primary  btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-cogs text-gray-900"></i>
+                        </span>
+                        <span class="text">MAXIMIN</span>
+                      </button>
+                      <a href="#" class="btn btn-outline-primary  btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-cogs text-gray-900"></i>
+                        </span>
+                        <span class="text">MAXIMAX</span>
+                      </a>
+                    </div>
+                    <div class=" my-1 text-center">
+                      <a href="#" class="btn btn-outline-primary  btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-cogs text-gray-900"></i>
+                        </span>
+                        <span class="text">MINIMAX REGRET</span>
+                      </a>
+                      <a href="#" class="btn btn-outline-primary  btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-cogs text-gray-900"></i>
+                        </span>
+                        <span class="text">HARDWIZ</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card border-left-success shadow p-3 mt-1 col">
+                    <h5 class="text-sm text-gray-800">Métodos Probabilísticos</h5>
+                    <div class="my-1 text-center">
+                      <a href="#" class="btn btn-outline-success  btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-cogs text-gray-900"></i>
+                        </span>
+                        <span class="text">EMV</span>
+                      </a>
+                      <a href="#" class="btn btn-outline-success  btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-cogs text-gray-900"></i>
+                        </span>
+                        <span class="text">EOL</span>
+                      </a>
+                    </div>
+                    <div class=" my-1 text-center">
+                      <a href="#" class="btn btn-outline-success  btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-cogs text-gray-900"></i>
+                        </span>
+                        <span class="text">ANÁLISIS DE SENSIBILIDAD</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-lg-4 p-2">
-                <div class="card border-left-primary shadow p-3">
-                  <h5 class="text-sm text-gray-800">Métodos No Probabilísticos</h5>
-                  <div class="my-1 text-center">
-                    <a href="#" onclick="createMatrix()" class="btn btn-outline-primary  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">MINIMAX</span>
-                    </a>
-                    <a href="#" class="btn btn-outline-primary  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">MAXIMAX</span>
-                    </a>
-                  </div>
-                  <div class=" my-1 text-center">
-                    <a href="#" class="btn btn-outline-primary  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">MINIMAX REGRET</span>
-                    </a>
-                    <a href="#" class="btn btn-outline-primary  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">HARDWIZ</span>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="card border-left-success shadow p-3 mt-1">
-                  <h5 class="text-sm text-gray-800">Métodos Probabilísticos</h5>
-                  <div class="my-1 text-center">
-                    <a href="#" class="btn btn-outline-success  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">EMV</span>
-                    </a>
-                    <a href="#" class="btn btn-outline-success  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">EOL</span>
-                    </a>
-                  </div>
-                  <div class=" my-1 text-center">
-                    <a href="#" class="btn btn-outline-success  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">ANÁLISIS DE SENSIBILIDAD</span>
-                    </a>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-          <!-- /.container-fluid -->
-
-        </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2019</span>
+              </form>
             </div>
           </div>
-        </footer>
-        <!-- End of Footer -->
-
-      </div>
-      <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+          <div class="card border-left-success shadow p-3 mt-1">
+            <h5 class="text-sm text-gray-800">Resultados</h5>
+            <div class="my-1 text-center">
+            </div>
           </div>
         </div>
       </div>
+
+
+
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
     </div>
+    <!-- End of Content Wrapper -->
 
-    <script src="js/script.js"></script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </div>
+  <!-- End of Page Wrapper -->
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+  <script src="js/script.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
