@@ -40,7 +40,7 @@
             var rowCount = table.rows.length;
             for(var i=0; i<rowCount; i++){            
                  var row = table.rows[i];
-                 row.deleteCell(colCount);                                  
+                 row.deleteCell(colCount-1);                                  
             } 
       }
 
