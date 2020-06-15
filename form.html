@@ -183,6 +183,16 @@
                 <div class="card-body mt-3">
                   <p>Ingrese los datos de la matriz a evaluar y a continuación seleccione el metodo con el que desea
                     que se realice el calculo:</p>
+                  <select class="form-control" name="" id="metodos">
+                    <option value="">Seleccione...</option>
+                    <option value="1">Metodos Probabilisticos</option>
+                    <option value="2">Metodos No Probabilisticos</option>
+                  </select>
+                  <br>
+                  <div id="alfa" hidden>
+                    <label for="">Alfa (Metodo de Hardwiz)</label>
+                    <input id="alfaVal" class="form-control form-control-sm" type="number" placeholder="Ingrese el valor">
+                  </div>
                   <table class="table table-striped" id="tabledata">
                     <thead>
                       <tr>
@@ -193,14 +203,25 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <th scope="row"> <input class="form-control form-control-sm" name="valor" type="text" value="a"> </th>
-                        <td> <input class="form-control form-control-sm" type="text" name="valor" placeholder="Ingrese el valor" required>
+                        <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text" value="Estados de la naturaleza" readonly>
+                        </td>
+                        <td> <input class="form-control form-control-sm" type="text" name="valor"
+                            placeholder="Ingrese el valor" required>
                         </td>
                         <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
                         </td>
                       </tr>
                       <tr>
-                        <th scope="row"> <input class="form-control form-control-sm" type="text" value="b"> </th>
+                        <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text" value="a">
+                        </td>
+                        <td> <input class="form-control form-control-sm" type="text" name="valor"
+                            placeholder="Ingrese el valor" required>
+                        </td>
+                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row"> <input class="form-control form-control-sm" type="text" value="b"> </td>
                         <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
                         </td>
                         <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
@@ -212,62 +233,60 @@
                   <a id="eliminar-fila" class="float-right text-danger" href="#">Quitar Alternativa <i
                       class="fa fa-minus"></i></a>
                 </div>
-                <div class="row" style="text-align: center;">
-                  <div class="card border-left-primary shadow p-2 col">
-                    <h5 class="text-sm text-gray-800">Métodos No Probabilísticos</h5>
-                    <div class="my-1 text-center">
-                      <button id="maximin" type="button" class="btn btn-outline-primary  btn-icon-split">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-cogs text-gray-900"></i>
-                        </span>
-                        <span class="text">MAXIMIN</span>
-                      </button>
-                      <a href="#" class="btn btn-outline-primary  btn-icon-split">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-cogs text-gray-900"></i>
-                        </span>
-                        <span class="text">MAXIMAX</span>
-                      </a>
-                    </div>
-                    <div class=" my-1 text-center">
-                      <a href="#" class="btn btn-outline-primary  btn-icon-split">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-cogs text-gray-900"></i>
-                        </span>
-                        <span class="text">MINIMAX REGRET</span>
-                      </a>
-                      <a href="#" class="btn btn-outline-primary  btn-icon-split">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-cogs text-gray-900"></i>
-                        </span>
-                        <span class="text">HARDWIZ</span>
-                      </a>
-                    </div>
+                <div class="card border-left-primary shadow p-2 col" hidden id="no-probablistic">
+                  <h5 class="text-sm text-gray-800">Métodos No Probabilísticos</h5>
+                  <div class="my-1 text-center">
+                    <button id="maximin" type="button" class="btn btn-outline-primary  btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">MAXIMIN</span>
+                    </button>
+                    <button type="button" id="maximax" class="btn btn-outline-primary  btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">MAXIMAX</span>
+                    </button>
                   </div>
-                  <div class="card border-left-success shadow p-3 mt-1 col">
-                    <h5 class="text-sm text-gray-800">Métodos Probabilísticos</h5>
-                    <div class="my-1 text-center">
-                      <a href="#" class="btn btn-outline-success  btn-icon-split">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-cogs text-gray-900"></i>
-                        </span>
-                        <span class="text">EMV</span>
-                      </a>
-                      <a href="#" class="btn btn-outline-success  btn-icon-split">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-cogs text-gray-900"></i>
-                        </span>
-                        <span class="text">EOL</span>
-                      </a>
-                    </div>
-                    <div class=" my-1 text-center">
-                      <a href="#" class="btn btn-outline-success  btn-icon-split">
-                        <span class="icon text-white-50">
-                          <i class="fas fa-cogs text-gray-900"></i>
-                        </span>
-                        <span class="text">ANÁLISIS DE SENSIBILIDAD</span>
-                      </a>
-                    </div>
+                  <div class=" my-1 text-center">
+                    <button id="regret" type="button" class="btn btn-outline-primary  btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">MINIMAX REGRET</span>
+                    </button>
+                    <button type="button" id="hardwiz" class="btn btn-outline-primary  btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">HARDWIZ</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="card border-left-success shadow p-3 mt-1 col" hidden id="probablistic">
+                  <h5 class="text-sm text-gray-800">Métodos Probabilísticos</h5>
+                  <div class="my-1 text-center">
+                    <a href="#" class="btn btn-outline-success  btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">EMV</span>
+                    </a>
+                    <a href="#" class="btn btn-outline-success  btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">EOL</span>
+                    </a>
+                  </div>
+                  <div class=" my-1 text-center">
+                    <a href="#" class="btn btn-outline-success  btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">ANÁLISIS DE SENSIBILIDAD</span>
+                    </a>
                   </div>
                 </div>
               </form>
