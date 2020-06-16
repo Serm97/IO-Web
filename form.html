@@ -11,6 +11,7 @@
 
   <title>INV-OP</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
   <link rel="icon" type="image/svg+xml"
     href="https://pbs.twimg.com/profile_images/488819340012027904/miTSg-oB_400x400.png" sizes="any">
   <!-- Custom fonts for this template-->
@@ -30,7 +31,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -171,7 +172,7 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container">
           <h1 class="m-0 font-weight-bold text-gray-900 text-center card p-3">
             Toma de Decisiones
           </h1>
@@ -183,18 +184,9 @@
                 <div class="card-body mt-3">
                   <p>Ingrese los datos de la matriz a evaluar y a continuación seleccione el metodo con el que desea
                     que se realice el calculo:</p>
-                  <select class="form-control" name="" id="metodos">
-                    <option value="">Seleccione...</option>
-                    <option value="1">Metodos Probabilisticos</option>
-                    <option value="2">Metodos No Probabilisticos</option>
-                  </select>
-                  <br>
-                  <div id="alfa" hidden>
-                    <label for="">Alfa (Metodo de Hardwiz)</label>
-                    <input id="alfaVal" class="form-control form-control-sm" type="number" placeholder="Ingrese el valor">
-                  </div>
+
                   <table class="table table-striped" id="tabledata">
-                    <thead>
+                    <thead class="bg-dark text-center text-white">
                       <tr>
                         <th scope="col">Alternativa</th>
                         <th scope="col">Evento A</th>
@@ -202,111 +194,149 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text" value="Estados de la naturaleza" readonly>
+                      <tr class="bg-gray-600">
+                        <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text"
+                            value="Ingrese los Estados de la naturaleza" readonly>
                         </td>
                         <td> <input class="form-control form-control-sm" type="text" name="valor"
-                            placeholder="Ingrese el valor" required>
+                            placeholder="Ingrese el nombre" value="Estado 1"  required>
                         </td>
-                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el nombre" value="Estado 2">
                         </td>
                       </tr>
                       <tr>
-                        <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text" value="a">
+                        <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text" value="Alternativa A">
                         </td>
-                        <td> <input class="form-control form-control-sm" type="text" name="valor"
+                        <td> <input class="form-control form-control-sm" type="number" name="valor"
                             placeholder="Ingrese el valor" required>
                         </td>
-                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        <td> <input class="form-control form-control-sm" type="number" placeholder="Ingrese el valor">
                         </td>
                       </tr>
                       <tr>
-                        <td scope="row"> <input class="form-control form-control-sm" type="text" value="b"> </td>
-                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        <td scope="row"> <input class="form-control form-control-sm" type="text" value="Alternativa B"> </td>
+                        <td> <input class="form-control form-control-sm" type="number" placeholder="Ingrese el valor">
                         </td>
-                        <td> <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor">
+                        <td> <input class="form-control form-control-sm" type="number" placeholder="Ingrese el valor">
                         </td>
                       </tr>
                     </tbody>
                   </table>
+
                   <div class="row">
-                    <div class="col-auto">
+                    <div class="col-lg-6 float-right">
                       <a href="#" id="aumentar-fila" class="btn btn-sm btn-outline-primary btn-circle">
                         <i class="fa fa-plus"></i>
                       </a>
                       <a href="#" id="eliminar-fila" class="btn btn-sm btn-outline-danger btn-circle">
                         <i class="fa fa-minus"></i>
-                      </a>  <br>
+                      </a> <br>
                       <small>Alternativas</small>
                     </div>
-                    <div class="col-lg-8"></div>
-                    <div class="col-auto">
+                    <div class="col-lg-6">
                       <a href="#" id="aumentar-col" class=" btn btn-sm btn-outline-primary btn-circle">
                         <i class="fa fa-plus"></i>
                       </a>
                       <a href="#" id="eliminar-col" class=" btn btn-sm btn-outline-danger btn-circle">
                         <i class="fa fa-minus"></i>
-                      </a>  <br>
+                      </a> <br>
                       <small class="">Eventos</small>
                     </div>
                   </div>
                   
-
+                  <div class="">
+                    <hr>
+                    <div class="input-group is-invalid">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text bg-dark text-white">Evaluar con</label>
+                      </div>
+                      <select class="custom-select"  id="metodos" required>
+                        <option value="">Seleccione...</option>
+                        <option value="1">Metodos Probabilisticos</option>
+                        <option value="2">Metodos No Probabilisticos</option></select>
+                    </div>
+                  </div>
                 </div>
-                <div class="card border-left-primary shadow p-2 col" hidden id="no-probablistic">
+                <div class="px-3 mt-1 col animated--grow-in" hidden id="no-probablistic">
                   <h5 class="text-sm text-gray-800">Métodos No Probabilísticos</h5>
-                  <div class="my-1 text-center">
-                    <button id="maximin" type="button" class="btn btn-outline-primary  btn-icon-split">
+                  <hr>
+                  <div class="input-group is-invalid" id="alfa" hidden>
+                    <div class="input-group-prepend ">
+                      <label class="input-group-text bg-gray-500 text-xs text-gray-900">Alfa (Metodo de Hardwiz)</label>
+                    </div>
+                    <input id="alfaVal" class="form-control text-xs" type="number"
+                      placeholder="Valor Alfa entre 0.0 y 1.0" min="0" max="1" step="0.1">
+                  </div>
+                  <div class="my-2 text-center">
+                    <button id="maximin" type="button" class="btn btn-outline-primary mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">MAXIMIN</span>
                     </button>
-                    <button type="button" id="maximax" class="btn btn-outline-primary  btn-icon-split">
+                    <button type="button" id="maximax" class="btn btn-outline-primary mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">MAXIMAX</span>
                     </button>
-                  </div>
-                  <div class=" my-1 text-center">
-                    <button id="regret" type="button" class="btn btn-outline-primary  btn-icon-split">
+                    <button type="button" id="hardwiz" class="btn btn-outline-primary mt-2 btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-cogs text-gray-900"></i>
+                      </span>
+                      <span class="text">HURWICZ</span>
+                    </button>
+                    <button id="regret" type="button" class="btn btn-outline-primary mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">MINIMAX REGRET</span>
                     </button>
-                    <button type="button" id="hardwiz" class="btn btn-outline-primary  btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">HARDWIZ</span>
-                    </button>
                   </div>
+                  
                 </div>
-                <div class="card border-left-success shadow p-3 mt-1 col" hidden id="probablistic">
+
+                <div class="px-3 mt-1 col animated--grow-in" hidden id="probablistic">
                   <h5 class="text-sm text-gray-800">Métodos Probabilísticos</h5>
-                  <div class="my-1 text-center">
-                    <a href="#" class="btn btn-outline-success  btn-icon-split">
+                  <hr>
+                  <table class="table table-sm" id="probability" hidden>
+                    <thead>
+                      <tr class="bg-dark text-white text-center">
+                        <th scope="col">Indique la probabilidad (100%)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text"
+                            value="Probabilidad de los eventos" readonly>
+                        </td>
+                        <td> <input class="form-control form-control-sm"type="number" min="0" max="1" step="0.1" id="prob1"
+                            placeholder="Valor entre 0.0 y 1.0">
+                        </td>
+                        <td> <input class="form-control form-control-sm" type="number" min="0" max="1" step="0.1" id="prob2"  placeholder="Valor entre 0.0 y 1.0">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="my-2 text-center">
+                    <button id="emv" type="button" class="btn btn-outline-success mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">EMV</span>
-                    </a>
-                    <a href="#" class="btn btn-outline-success  btn-icon-split">
+                    </button>
+                    <button type="button" id="eol" class="btn btn-outline-success mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">EOL</span>
-                    </a>
-                  </div>
-                  <div class=" my-1 text-center">
-                    <a href="#" class="btn btn-outline-success  btn-icon-split">
+                    </button>
+                    <button type="button" id="sensibility" href="#" class="btn btn-outline-success mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">ANÁLISIS DE SENSIBILIDAD</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </form>
@@ -314,6 +344,10 @@
           </div>
           <div class="card border-left-success shadow p-3 mt-1">
             <h5 class="text-sm text-gray-800">Resultados</h5>
+            <div id="resultados" class="animated--grow-in">
+              <table class="table table-striped" id="results">
+              </table>
+            </div>
             <div class="my-1 text-center">
             </div>
           </div>
