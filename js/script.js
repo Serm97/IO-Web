@@ -195,6 +195,8 @@
                   url: "https://invoperacionesapi.azurewebsites.net/api/Metodos/GetMatrizEMV",
                   data: JSON.stringify(matriz),
                   success: function (datos) {
+                        console.log(datos);
+                        $("#solucion").text(datos.Result)
                         tableProbabilisticResults(datos)
                   },
             })
@@ -214,9 +216,6 @@
             let cuerpoTabla = document.createElement('tbody')
             let titulos = document.createElement('tr')
             for (let index = 0; index < datos.Matriz[0]; index++) {
-                  if (dato == "null") {
-                        dato = "Alternativas"
-                  }
                   let titulo = document.createElement('th')
                   titulos.appendChild(document.createTextNode(dato));
                   titulo.appendChild(celda)
@@ -252,6 +251,7 @@
                   url: "https://invoperacionesapi.azurewebsites.net/api/Metodos/GetMatrizEOL",
                   data: JSON.stringify(matriz),
                   success: function (datos) {
+                        $("#solucion").text(datos.Result)
                         tableProbabilisticResults(datos)
                   },
             })
@@ -289,6 +289,5 @@
             }
             var data = alternativas
             Plotly.newPlot('grafico', data);
-
       }
 }))
