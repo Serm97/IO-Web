@@ -287,6 +287,7 @@
                   url: "https://invoperacionesapi.azurewebsites.net/api/Metodos/GetMatrizEMV",
                   data: JSON.stringify(matriz),
                   success: function (datos) {
+                         $("#solucion").text(datos.Result)
                         tableProbabilisticResults(datos)
                   },
                   error: function(err){
@@ -359,6 +360,7 @@
                   url: "https://invoperacionesapi.azurewebsites.net/api/Metodos/GetMatrizEOL",
                   data: JSON.stringify(matriz),
                   success: function (datos) {
+                        $("#solucion").text(datos.Result)
                         tableProbabilisticResults(datos)
                   },
                   error: function(err){
