@@ -16,9 +16,10 @@
             $("#eol").on('click', eol)
             $("#sensibility").on('click', sensibiltyAnalisis)
             $("#metodos").on("change", vistasMetodos)
+
       })
       function addRow() {
-            let filas = '<tr><td scope="row">  <input class="form-control form-control-sm" type="text" value="Alt"> </td><td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td><td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td></tr>'
+            let filas = '<tr><td scope="row">  <input class="form-control form-control-sm" type="text" value="Alternativa X"> </td><td>  <input class="form-control form-control-sm" type="number" placeholder="Ingrese el valor"> </td><td>  <input class="form-control form-control-sm" type="number" placeholder="Ingrese el valor"> </td></tr>'
             $("#tabledata").append(filas)
       }
 
@@ -31,8 +32,10 @@
                   var col = row.insertCell(colCount);
                   if (i == 0) {
                         col.innerHTML = '<th><b>Evento</b></th>';
-                  } else {
-                        col.innerHTML = '<td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el valor"> </td>';
+                  } else if(i == 1) {
+                        col.innerHTML = '<td>  <input class="form-control form-control-sm" type="text" placeholder="Ingrese el nombre" value="Estado X"> </td>';
+                  }else{
+                        col.innerHTML = '<td>  <input class="form-control form-control-sm" type="number" placeholder="Ingrese el valor"> </td>';   
                   }
             }
             var table = document.getElementById('probability');
@@ -71,8 +74,8 @@
             var rowCount = table.rows.length;
             //console.log(rowCount);
 
-            if (rowCount <= 1)
-                  alert('No se puede eliminar el encabezado');
+            if (rowCount <= 2)
+                  alert('No se puede eliminar los encabezados');
             else
                   table.deleteRow(rowCount - 1);
       }
@@ -92,8 +95,8 @@
       }
 
       function maximin() {
-            armarMatriz()
-            console.log(JSON.stringify(matriz));
+            armarMatriz();
+            //console.log(JSON.stringify(matriz));
 
             $.ajax({
                   headers: {
@@ -104,14 +107,19 @@
                   url: "https://invoperacionesapi.azurewebsites.net/api/Metodos/GetWaldCriterion",
                   data: JSON.stringify(matriz),
                   success: function (datos) {
-                        console.log(datos)
+                        console.log(datos);
+                        tableResult(datos);
                   },
+                  error: function(err){
+                        console.log(err);
+                        alert("Ocurrio un error");
+                  }
             })
       }
 
       function maximax() {
             armarMatriz()
-            console.log(JSON.stringify(matriz));
+            //console.log(JSON.stringify(matriz));
 
             $.ajax({
                   headers: {
@@ -123,7 +131,12 @@
                   data: JSON.stringify(matriz),
                   success: function (datos) {
                         console.log(datos)
+                        tableResult(datos)
                   },
+                  error: function(err){
+                        console.log(err);
+                        alert("Ocurrio un error");
+                  }
             })
       }
 
@@ -141,13 +154,22 @@
                   data: JSON.stringify(matriz),
                   success: function (datos) {
                         console.log(datos)
+                        tableResult(datos)      
                   },
+                  error: function(err){
+                        console.log(err);
+                        alert("Ocurrio un error");
+                  }
             })
       }
 
       function hardwiz() {
             armarMatriz()
             matriz.Alfa = $("#alfaVal").val()
+            if(matriz.Alfa == ""){
+                  alert("Debe indicar el valor de alfa para continuar");
+                  return;
+            }
             $.ajax({
                   headers: {
                         "Content-Type": "application/json"
@@ -158,34 +180,104 @@
                   data: JSON.stringify(matriz),
                   success: function (datos) {
                         console.log(datos)
+                        tableResult(datos)
                   },
+                  error: function(err){
+                        console.log(err);
+                        alert("Ocurrio un error");
+                  }
             })
       }
 
       function vistasMetodos() {
             let opciones = parseInt($(this).val())
+            let div = '';
             switch (opciones) {
                   case 1:
                         $("#no-probablistic").attr('hidden', true)
                         $("#probablistic").removeAttr('hidden')
                         $("#alfa").attr('hidden', true)
                         $("#probability").removeAttr('hidden')
+                        div = 'probablistic';
                         break
                   case 2:
                         $("#probablistic").attr('hidden', true)
                         $("#no-probablistic").removeAttr('hidden')
                         $("#alfa").removeAttr('hidden')
                         $("#probability").attr('hidden', true)
+                        div = 'no-probablistic';
                         break
                   default:
                         break
             }
+            $('html, body').animate({
+                  scrollTop: $('#'+div+'').offset().top
+            }, 2000);
+      }
+
+      function tableResult(datos){
+            let encabezado = document.createElement('thead')
+            let cuerpoTabla = document.createElement('tbody')
+            let titulos = document.createElement('tr')
+            var alt = datos.Descripcion.split(";");
+            alt.pop();
+            console.log(alt);
+      
+            alt.forEach(function (datosFilas) {
+                  let fila = document.createElement('tr')
+                  var info = datosFilas.split(":");
+                  console.log("info" + info);
+                  
+                  let celda = document.createElement('td')          
+                  celda.appendChild(document.createTextNode(info[0]))
+                  fila.appendChild(celda)
+
+                  celda = document.createElement('td')          
+                  celda.appendChild(document.createTextNode("Estado: " + info[1].split("=")[2]))
+                  fila.appendChild(celda)
+
+                  celda = document.createElement('td')          
+                  celda.appendChild(document.createTextNode("Valor: $" + new Intl.NumberFormat().format(info[1].split("=")[1].split(" ")[0])))
+                  fila.appendChild(celda)
+                  
+                  cuerpoTabla.appendChild(fila)
+            });
+
+            let fila = document.createElement('tr')
+            let celda = document.createElement('td')
+            celda.setAttribute('colspan','3')
+            celda.setAttribute('style','text-align:center; background-color:#1cc88a;color:white')
+            celda.appendChild(document.createTextNode("Elección Sugerida por Criterio " + datos.Criterio))
+            fila.appendChild(celda)
+            cuerpoTabla.appendChild(fila)
+
+
+            fila = document.createElement('tr')
+            celda = document.createElement('td')
+            celda.setAttribute('colspan','3')
+            celda.setAttribute('style','text-align:center;')
+            celda.appendChild(document.createTextNode(datos.Resultado))
+            fila.appendChild(celda)
+            cuerpoTabla.appendChild(fila)
+            
+
+            $("#results").html(encabezado)
+            $("#results").html(cuerpoTabla)
+            $("#resultados").html($("#results"))
+            $('html, body').animate({
+                  scrollTop: $("#resultados").offset().top
+            }, 2000);
       }
 
       function emv() {
+            if(!validarProbabilidades()){
+                  return;
+            }
+            
             armarMatriz()
             armarProbabilidades()
-            console.log(JSON.stringify(matriz));
+            
+            //console.log(JSON.stringify(matriz));
             $.ajax({
                   headers: {
                         "Content-Type": "application/json"
@@ -195,11 +287,18 @@
                   url: "https://invoperacionesapi.azurewebsites.net/api/Metodos/GetMatrizEMV",
                   data: JSON.stringify(matriz),
                   success: function (datos) {
-                        console.log(datos);
-                        $("#solucion").text(datos.Result)
+                         $("#solucion").text(datos.Result)
                         tableProbabilisticResults(datos)
                   },
+                  error: function(err){
+                        console.log(err);
+                        alert("Ocurrio un error");
+                  }
             })
+
+            $('html, body').animate({
+                  scrollTop: $('#resultados').offset().top
+            }, 2000);
       }
 
       function armarProbabilidades() {
@@ -215,6 +314,8 @@
             let encabezado = document.createElement('thead')
             let cuerpoTabla = document.createElement('tbody')
             let titulos = document.createElement('tr')
+            console.log("Matriz: "+ datos.Matriz[0]);
+            
             for (let index = 0; index < datos.Matriz[0]; index++) {
                   let titulo = document.createElement('th')
                   titulos.appendChild(document.createTextNode(dato));
@@ -232,16 +333,21 @@
 
                   cuerpoTabla.appendChild(fila)
             });
-
             $("#results").html(encabezado)
             $("#results").html(cuerpoTabla)
             $("#resultados").html($("#results"))
+            $('html, body').animate({
+                  scrollTop: $("#resultados").offset().top
+            }, 2000);
       }
 
       function eol() {
+            if(!validarProbabilidades()){
+                  return;
+            }
             armarMatriz()
             armarProbabilidades()
-            console.log(JSON.stringify(matriz));
+            ////console.log(JSON.stringify(matriz));
             $.ajax({
                   headers: {
                         "Content-Type": "application/json"
@@ -254,13 +360,23 @@
                         $("#solucion").text(datos.Result)
                         tableProbabilisticResults(datos)
                   },
+                  error: function(err){
+                        console.log(err);
+                        alert("Ocurrio un error");
+                  }
             })
+            $('html, body').animate({
+                  scrollTop: $('#resultados').offset().top
+            }, 2000);
       }
 
       function sensibiltyAnalisis() {
+            if(!validarProbabilidades()){
+                  return;
+            }
             armarMatriz()
             armarProbabilidades()
-            console.log(JSON.stringify(matriz));
+            //console.log(JSON.stringify(matriz));
             $.ajax({
                   headers: {
                         "Content-Type": "application/json"
@@ -272,7 +388,14 @@
                   success: function (datos) {
                         armarGrafico(datos)
                   },
+                  error: function(err){
+                        console.log(err);
+                        alert("Ocurrio un error");
+                  }
             })
+            $('html, body').animate({
+                  scrollTop: $('#resultados').offset().top
+            }, 2000);
       }
 
       function armarGrafico(datos) {
@@ -288,6 +411,77 @@
                   alternativas.push(objetosAlternativas)
             }
             var data = alternativas
+            g = document.createElement('div')
+            g.setAttribute("id", "grafico")
+            $("#resultados").html(g)
             Plotly.newPlot('grafico', data);
+            $('html, body').animate({
+                  scrollTop: $("#grafico").offset().top
+            }, 2000);
+
+      }
+
+      function validarProbabilidades(){
+            
+            if($('#prob1').val() == "" || $('#prob2').val() == ""){
+                  alert("Debe indicar los valores de probabilidad");
+                  return false;
+            }
+
+            var sum = parseFloat($('#prob1').val()) + parseFloat($('#prob2').val());
+
+            if(sum == 0.0 || sum < 1.0 || sum > 1.0){
+                  alert("La suma de las probabilidades debe ser 1");
+                  return false;
+            }
+            
+            return true;
       }
 }))
+
+$('body').ready(function(){
+      if(screen.width < 1024){
+            $('table').addClass('table-responsive');
+      }else{
+            $('table').removeClass('table-responsive');
+      }
+})
+
+$(function () {
+      $( "#prob1" ).change(function() {
+         var max = parseInt($(this).attr('max'));
+         var min = parseInt($(this).attr('min'));
+         if ($(this).val() > max)
+         {
+             $(this).val(max);
+         }
+         else if ($(this).val() < min)
+         {
+             $(this).val(min);
+         }       
+       }); 
+       $( "#prob2" ).change(function() {
+            var max = parseInt($(this).attr('max'));
+            var min = parseInt($(this).attr('min'));
+            if ($(this).val() > max)
+            {
+                $(this).val(max);
+            }
+            else if ($(this).val() < min)
+            {
+                $(this).val(min);
+            }       
+          });
+          $( "#alfaVal" ).change(function() {
+            var max = parseInt($(this).attr('max'));
+            var min = parseInt($(this).attr('min'));
+            if ($(this).val() > max)
+            {
+                $(this).val(max);
+            }
+            else if ($(this).val() < min)
+            {
+                $(this).val(min);
+            }       
+          }); 
+   });
