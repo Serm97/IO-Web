@@ -31,15 +31,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
-
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon">
-          <i class="fas fa-shapes"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">INV <sup>OP</sup></div>
-      </a>
+    <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
@@ -49,7 +41,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        MENÚ
+        Investigación de Operaciones
       </div>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -68,16 +60,11 @@
       <li class="nav-item active">
         <a class="nav-link" href="form.html">
           <i class="fas fa-fw fa-cog"></i>
-          <span class="text-xs">Toma de Decisiones</span>
+          <span class="text-xs">Metodos probabilisticos</span>
         </a>
       </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
 
     </ul>
     <!-- End of Sidebar -->
@@ -96,19 +83,6 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-success" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -126,7 +100,7 @@
                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                       aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-darkbg-dark" type="button">
                         <i class="fas fa-search fa-sm"></i>
                       </button>
                     </div>
@@ -143,28 +117,8 @@
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Universidad Konrad Lorenz</span>
                 <img class="img-profile rounded-circle"
-                  src="https://pbs.twimg.com/profile_images/488819340012027904/miTSg-oB_400x400.png">
+                  src="https://www.uninorte.edu.co/documents/10162/4921b1a3-3342-4fda-aa6a-d2e03bcb0546?igSmallImage=0">
               </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
             </li>
           </ul>
 
@@ -174,7 +128,7 @@
         <!-- Begin Page Content -->
         <div class="container">
           <h1 class="m-0 font-weight-bold text-gray-900 text-center card p-3">
-            Toma de Decisiones
+            Metodos probabilisticos
           </h1>
 
           <!-- Content Row -->
@@ -194,7 +148,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="bg-gray-600">
+                      <tr class="bg-blue-600">
                         <td scope="row"> <input class="form-control form-control-sm" name="valor" type="text"
                             value="Ingrese los Estados de la naturaleza" readonly>
                         </td>
@@ -225,7 +179,7 @@
 
                   <div class="row">
                     <div class="col-lg-6 float-right">
-                      <a href="#" id="aumentar-fila" class="btn btn-sm btn-outline-primary btn-circle">
+                      <a href="#" id="aumentar-fila" class="btn btn-sm btn-outline-success btn-circle">
                         <i class="fa fa-plus"></i>
                       </a>
                       <a href="#" id="eliminar-fila" class="btn btn-sm btn-outline-danger btn-circle">
@@ -234,7 +188,7 @@
                       <small>Alternativas</small>
                     </div>
                     <div class="col-lg-6">
-                      <a href="#" id="aumentar-col" class=" btn btn-sm btn-outline-primary btn-circle">
+                      <a href="#" id="aumentar-col" class=" btn btn-sm btn-outline-success btn-circle">
                         <i class="fa fa-plus"></i>
                       </a>
                       <a href="#" id="eliminar-col" class=" btn btn-sm btn-outline-danger btn-circle">
@@ -243,63 +197,12 @@
                       <small class="">Eventos</small>
                     </div>
                   </div>
-                  
-                  <div class="">
-                    <hr>
-                    <div class="input-group is-invalid">
-                      <div class="input-group-prepend">
-                        <label class="input-group-text bg-dark text-white">Evaluar con</label>
-                      </div>
-                      <select class="custom-select"  id="metodos" required>
-                        <option value="">Seleccione...</option>
-                        <option value="1">Metodos Probabilisticos</option>
-                        <option value="2">Metodos No Probabilisticos</option></select>
-                    </div>
-                  </div>
-                </div>
-                <div class="px-3 mt-1 col animated--grow-in" hidden id="no-probablistic">
-                  <h5 class="text-sm text-gray-800">Métodos No Probabilísticos</h5>
-                  <hr>
-                  <div class="input-group is-invalid" id="alfa" hidden>
-                    <div class="input-group-prepend ">
-                      <label class="input-group-text bg-gray-500 text-xs text-gray-900">Alfa (Metodo de Hardwiz)</label>
-                    </div>
-                    <input id="alfaVal" class="form-control text-xs" type="number"
-                      placeholder="Valor Alfa entre 0.0 y 1.0" min="0" max="1" step="0.1">
-                  </div>
-                  <div class="my-2 text-center">
-                    <button id="maximin" type="button" class="btn btn-outline-primary mt-2 btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">MAXIMIN</span>
-                    </button>
-                    <button type="button" id="maximax" class="btn btn-outline-primary mt-2 btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">MAXIMAX</span>
-                    </button>
-                    <button type="button" id="hardwiz" class="btn btn-outline-primary mt-2 btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">HURWICZ</span>
-                    </button>
-                    <button id="regret" type="button" class="btn btn-outline-primary mt-2 btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-cogs text-gray-900"></i>
-                      </span>
-                      <span class="text">MINIMAX REGRET</span>
-                    </button>
-                  </div>
-                  
                 </div>
 
-                <div class="px-3 mt-1 col animated--grow-in" hidden id="probablistic">
+                <div class="px-3 mt-1 col animated--grow-in" id="probablistic">
                   <h5 class="text-sm text-gray-800">Métodos Probabilísticos</h5>
                   <hr>
-                  <table class="table table-sm" id="probability" hidden>
+                  <table class="table table-sm" id="probability">
                     <thead>
                       <tr class="bg-dark text-white text-center">
                         <th scope="col">Indique la probabilidad (100%)</th>
@@ -319,19 +222,19 @@
                     </tbody>
                   </table>
                   <div class="my-2 text-center">
-                    <button id="emv" type="button" class="btn btn-outline-success mt-2 btn-icon-split">
+                    <button id="emv" type="button" class="btn btn-outline-darkbg-dark mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">EMV</span>
                     </button>
-                    <button type="button" id="eol" class="btn btn-outline-success mt-2 btn-icon-split">
+                    <button type="button" id="eol" class="btn btn-outline-darkbg-dark mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
                       <span class="text">EOL</span>
                     </button>
-                    <button type="button" id="sensibility" href="#" class="btn btn-outline-success mt-2 btn-icon-split">
+                    <button type="button" id="sensibility" href="#" class="btn btn-outline-darkbg-dark mt-2 btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-cogs text-gray-900"></i>
                       </span>
@@ -342,7 +245,7 @@
               </form>
             </div>
           </div>
-          <div class="card border-left-success shadow p-3 mt-1">
+          <div class="card border-left-pribtn-outline-darkbg-dark shadow p-3 mt-1">
             <h5 class="text-sm text-gray-800">Resultados</h5>
             <div id="resultados" class="animated--grow-in">
               <table class="table table-striped" id="results">
@@ -361,9 +264,6 @@
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
         </div>
       </footer>
       <!-- End of Footer -->
@@ -393,7 +293,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-darkbg-dark" href="login.html">Logout</a>
         </div>
       </div>
     </div>
